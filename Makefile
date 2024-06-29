@@ -39,10 +39,10 @@ goreleaser-precheck:
 	@if [ -z ${PROPRIETARY_SELF_UPDATES_FEED_URL} ]; then echo "PROPRIETARY_SELF_UPDATES_FEED_URL is empty"; exit 1; fi
 
 goreleaser-rm-dist: goreleaser-precheck
-	GORELEASER_CURRENT_TAG=$(GORELEASER_CURRENT_TAG) SELF_UPDATES_FEED_URL=$(SELF_UPDATES_FEED_URL) PROPRIETARY_SELF_UPDATES_FEED_URL=$(PROPRIETARY_SELF_UPDATES_FEED_URL) goreleaser --rm-dist
+	GORELEASER_CURRENT_TAG=$(GORELEASER_CURRENT_TAG) SELF_UPDATES_FEED_URL=$(SELF_UPDATES_FEED_URL) PROPRIETARY_SELF_UPDATES_FEED_URL=$(PROPRIETARY_SELF_UPDATES_FEED_URL) goreleaser --clean
 
 goreleaser-snapshot: goreleaser-precheck
-	GORELEASER_CURRENT_TAG=$(GORELEASER_CURRENT_TAG) SELF_UPDATES_FEED_URL=$(SELF_UPDATES_FEED_URL) PROPRIETARY_SELF_UPDATES_FEED_URL=$(PROPRIETARY_SELF_UPDATES_FEED_URL) goreleaser --snapshot --rm-dist
+	GORELEASER_CURRENT_TAG=$(GORELEASER_CURRENT_TAG) SELF_UPDATES_FEED_URL=$(SELF_UPDATES_FEED_URL) PROPRIETARY_SELF_UPDATES_FEED_URL=$(PROPRIETARY_SELF_UPDATES_FEED_URL) goreleaser --snapshot --clean
 
 docker-goreleaser: goreleaser-precheck
 	docker run -it --rm --privileged \
@@ -52,7 +52,7 @@ docker-goreleaser: goreleaser-precheck
 		-w ${PROJECT_DIR} \
 		-e SELF_UPDATES_FEED_URL=$(SELF_UPDATES_FEED_URL) \
 		-e PROPRIETARY_SELF_UPDATES_FEED_URL=$(SELF_UPDATES_FEED_URL) \
-		goreleaser/goreleaser:v0.126 --snapshot --rm-dist --skip-publish
+		goreleaser/goreleaser:v0.126 --snapshot --clean --skip-publish
 
 docker-golangci-lint:
 	docker run -it --rm \
