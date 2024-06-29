@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 package winapi
@@ -88,7 +89,7 @@ type MibIfRow2 struct {
 	MediaConnectState           int32
 	NetworkGuid                 NET_IF_NETWORK_GUID
 	ConnectionType              int32
-	padding1                    [pad0for64_4for32]byte
+	padding1                    []byte
 	TransmitLinkSpeed           uint64
 	ReceiveLinkSpeed            uint64
 	InOctets                    uint64
